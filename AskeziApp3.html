@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аскеза: 21 день к цели</title>
+    <style>
+        :root {
+            --primary-color: #e67e22;
+            --primary-dark: #d35400;
+            --secondary-color: #34495e;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 10px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 5px);
+            background-size: 50px 50px, 100px 100px;
+            background-position: 0 0, 25px 25px;
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            text-align: center;
+            margin: 5px 0;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--dark-color);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #2ecc71;
+        }
+        
+        .card {
+            background-color: rgba(20, 20, 30, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .progress-container {
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            height: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary-color);
+            height: 100%;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+        }
+        
+        .day-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .day-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .day-btn.completed {
+            background-color: var(--success-color);
+        }
+        
+        .day-btn.current {
+            background-color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .rating-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .rating-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .rating-btn.selected {
+            background-color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .results-table th, .results-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--secondary-color);
+        }
+        
+        .results-table th {
+            color: var(--primary-color);
+        }
+        
+        .before-sleep-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--primary-color);
+        }
+        
+        .before-sleep-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .before-sleep-instructions {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        
+        .before-sleep-example {
+            background-color: rgba(230, 126, 34, 0.1);
+            border-left: 3px solid var(--primary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .before-sleep-example h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                margin-bottom: 5px;
+                border-radius: 4px;
+                text-align: center;
+            }
+            
+            .rating-group {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .rating-btn {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Аскеза: 21 день к цели</h1>
+            <p>Трансформация привычек и достижение целей через 21-дневную практику</p>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="setup">Начало</div>
+            <div class="tab" data-tab="journal">Дневник</div>
+            <div class="tab" data-tab="progress">Прогресс</div>
+            <div class="tab" data-tab="complete">Завершение</div>
+            <div class="tab" data-tab="settings">Настройки</div>
+        </div>
+        
+        <div id="setup" class="tab-content active">
+            <div class="card">
+                <h2>Создание аскезы</h2>
+                <div class="form-group">
+                    <label for="full-name">Ваши Ф.И.О.</label>
+                    <input type="text" id="full-name" placeholder="Введите Ваши Ф.И.О.">
+                </div>
+                
+                <div class="form-group">
+                    <label for="askeza-type">Тип аскезы</label>
+                    <select id="askeza-type">
+                        <option value="negative">Отказ от вредной привычки</option>
+                        <option value="positive">Внедрение полезной привычки</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="habit">Привычка</label>
+                    <input type="text" id="habit" placeholder="Введите название привычки">
+                </div>
+                
+                <div class="form-group">
+                    <label for="goal">Цель аскезы</label>
+                    <input type="text" id="goal" placeholder="Введите вашу цель/желание">
+                </div>
+                
+                <div class="form-group">
+                    <label for="start-date">Дата начала</label>
+                    <input type="date" id="start-date">
+                </div>
+                
+                <div id="askeza-text" class="card" style="background-color: rgba(230, 126, 34, 0.1); border: 1px dashed var(--primary-color);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 10px;">Текст аскезы:</h3>
+                    <p id="askeza-preview">Заполните форму выше, чтобы сгенерировать текст аскезы.</p>
+                </div>
+                
+                <button id="generate-btn" class="btn">Сгенерировать текст</button>
+                <button id="start-askeza-btn" class="btn btn-success hidden">Начать аскезу</button>
+            </div>
+            
+            <div class="card">
+                <h2>Инструкция по началу аскезы</h2>
+                <ol style="padding-left: 20px;">
+                    <li>Зажгите восковую свечу.</li>
+                    <li>Сядьте удобно, чтобы вам было комфортно.</li>
+                    <li>Сделайте несколько глубоких вдохов и выдохов.</li>
+                    <li>Произнесите вслух текст вашей аскезы (1 или 3 раза).</li>
+                    <li>С этого момента ваша аскеза начинается!</li>
+                    <li>Свечку можно потушить.</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div id="journal" class="tab-content">
+            <div class="card">
+                <h2>Дневник аскезы: <span id="current-day">День 1</span></h2>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <div class="progress-text" id="progress-text">0%</div>
+                </div>
+                
+                <div class="day-selector" id="day-selector">
+                    <!-- Days will be added by JavaScript -->
+                </div>
+                
+                <div class="form-group">
+                    <label>Мой настрой на аскезу (1-10):</label>
+                    <div class="rating-group" id="askeza-mood">
+                        <!-- Rating buttons will be added by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Моё настроение (1-10):</label>
+                    <div class="rating-group" id="general-mood">
+                        <!-- Rating buttons will be added by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Мой энергетический уровень (1-10):</label>
+                    <div class="rating-group" id="energy-level">
+                        <!-- Rating buttons will be added by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Насколько я ощущаю важность поставленной цели? (1-10):</label>
+                    <div class="rating-group" id="goal-importance">
+                        <!-- Rating buttons will be added by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="general-state">Общее состояние:</label>
+                    <textarea id="general-state" placeholder="Опишите ваше общее состояние, мысли, ощущения..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="focus">На чём сегодня был фокус внимания:</label>
+                    <textarea id="focus" placeholder="Что привлекало ваше внимание сегодня?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="steps">Какие шаги сделаны на пути к цели:</label>
+                    <textarea id="steps" placeholder="Какие шаги вы сделали сегодня в направлении вашей цели?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gratitude">Благодарность себе:</label>
+                    <textarea id="gratitude" placeholder="За что вы можете себя сегодня поблагодарить?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="observations">Другие наблюдения:</label>
+                    <textarea id="observations" placeholder="Другие важные наблюдения, инсайты..."></textarea>
+                </div>
+                
+                <!-- Добавлен новый раздел "Перед сном" -->
+                <div class="before-sleep-section">
+                    <h3>Перед сном: Визуализация цели</h3>
+                    <p class="before-sleep-instructions">
+                        Представьте свою жизнь, когда цель уже осуществлена. Опишите максимально подробно, что вы видите, 
+                        слышите и чувствуете. Какие люди вас окружают? Где вы находитесь? Какие эмоции испытываете? 
+                        Какие детали замечаете вокруг себя? Пишите в потоке, не редактируя мысли. Будьте максимально 
+                        честны и конкретны — это ключ к вашему успеху.
+                    </p>
+                    
+                    <div class="before-sleep-example">
+                        <h4>Пример заполнения:</h4>
+                        <p>
+                            Я живу в просторной квартире с панорамными окнами в центре Москвы. По утрам я завтракаю 
+                            свежими круассанами с ароматным кофе, любуясь видом на город. На работе меня ценят как 
+                            профессионала, мой доход составляет 300 000 рублей в месяц. Я окружен интересными людьми, 
+                            мы часто обсуждаем новые проекты за ужином в хороших ресторанах. Я чувствую себя уверенно, 
+                            реализованно и счастливо. Каждые выходные я посещаю spa-салон, где получаю удовольствие 
+                            от массажа и ухода за собой. Раз в год я путешествую в теплые страны, где отдыхаю в 
+                            комфортабельных отелях у моря.
+                        </p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="before-sleep-vision">Моя жизнь, когда цель осуществлена:</label>
+                        <textarea id="before-sleep-vision" placeholder="Опишите свою жизнь после достижения цели..."></textarea>
+                    </div>
+                </div>
+                
+                <button id="save-journal-btn" class="btn">Сохранить запись</button>
+            </div>
+        </div>
+        
+        <div id="progress" class="tab-content">
+            <div class="card">
+                <h2>Прогресс аскезы</h2>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar-2"></div>
+                    <div class="progress-text" id="progress-text-2">0%</div>
+                </div>
+                
+                <div id="askeza-info" class="form-group">
+                    <h3>Информация об аскезе:</h3>
+                    <p><strong>Тип:</strong> <span id="info-type"></span></p>
+                    <p><strong>Привычка:</strong> <span id="info-habit"></span></p>
+                    <p><strong>Цель:</strong> <span id="info-goal"></span></p>
+                    <p><strong>Дата начала:</strong> <span id="info-start-date"></span></p>
+                    <p><strong>Дата завершения:</strong> <span id="info-end-date"></span></p>
+                    <p><strong>Прошло дней:</strong> <span id="info-days-passed"></span></p>
+                    <p><strong>Осталось дней:</strong> <span id="info-days-left"></span></p>
+                </div>
+                
+                <h3>Статистика по дням:</h3>
+                <div class="stats-container" id="stats-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>День</th>
+                                <th>Настрой</th>
+                                <th>Настроение</th>
+                                <th>Энергия</th>
+                                <th>Важность цели</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-body">
+                            <!-- Stats will be added by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="complete" class="tab-content">
+            <div class="card">
+                <h2>Завершение аскезы</h2>
+                
+                <div id="completion-ready" class="hidden">
+                    <p>Вы прошли все 21 день аскезы! Теперь вы можете завершить аскезу, выполнив следующие шаги:</p>
+                    
+                    <ol style="padding-left: 20px; margin-bottom: 20px;">
+                        <li>Зажгите восковую свечу.</li>
+                        <li>Сядьте удобно, чтобы вам было комфортно.</li>
+                        <li>Сделайте несколько глубоких вдохов и выдохов.</li>
+                        <li>Произнесите вслух текст завершения аскезы (1 или 3 раза).</li>
+                    </ol>
+                    
+                    <div class="card" style="background-color: rgba(230, 126, 34, 0.1); border: 1px dashed var(--primary-color);">
+                        <h3 style="color: var(--primary-color); margin-bottom: 10px;">Текст завершения аскезы:</h3>
+                        <p id="completion-text"></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="final-observations">Наблюдения и выводы:</label>
+                        <textarea id="final-observations" placeholder="Запишите ваши наблюдения и выводы по результатам прохождения аскезы..."></textarea>
+                    </div>
+                    
+                    <button id="finish-askeza-btn" class="btn btn-success">Завершить аскезу</button>
+                </div>
+                
+                <div id="completion-not-ready">
+                    <p>Вы ещё не прошли полный 21-дневный цикл аскезы.</p>
+                    <p>Продолжайте вести дневник и отмечать прогресс каждый день.</p>
+                    <p>Когда вы достигнете 21-го дня, здесь появятся инструкции по завершению аскезы.</p>
+                    
+                    <p style="margin-top: 20px;"><strong>Текущий прогресс:</strong></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar-3"></div>
+                        <div class="progress-text" id="progress-text-3">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="settings" class="tab-content">
+            <div class="card">
+                <h2>Настройки и Данные</h2>
+                
+                <div class="form-group">
+                    <h3>Экспорт данных</h3>
+                    <p>Сохраните данные текущей аскезы для резервного копирования или переноса на другое устройство.</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="export-json-btn" class="btn">Экспорт в JSON</button>
+                        <button id="export-txt-btn" class="btn">Экспорт отчета (TXT)</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3>Импорт данных</h3>
+                    <p>Загрузите ранее сохраненную аскезу из JSON-файла.</p>
+                    <p style="color: var(--warning-color); margin-bottom: 10px;"><strong>Внимание:</strong> Импорт данных заменит текущую аскезу!</p>
+                    <input type="file" id="import-file" accept=".json" style="background-color: transparent; border: none;">
+                    <button id="import-json-btn" class="btn">Импортировать</button>
+                </div>
+                
+                <div class="form-group">
+                    <h3>Архив аскез</h3>
+                    <p>Список ваших завершенных аскез:</p>
+                    <div id="archive-list" style="margin-top: 10px;">
+                        <p>Список пуст.</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h3>Очистка данных</h3>
+                    <p style="color: var(--danger-color); margin-bottom: 10px;"><strong>Внимание:</strong> Эти действия необратимы!</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button id="reset-current-btn" class="btn btn-secondary">Сбросить текущую аскезу</button>
+                        <button id="clear-all-data-btn" class="btn btn-secondary">Очистить все данные</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let askezaData = {
+            fullName: '',
+            type: 'negative',
+            habit: '',
+            goal: '',
+            startDate: null,
+            currentDay: 0,
+            isStarted: false,
+            journal: {},
+            id: generateUniqueId() // Уникальный идентификатор аскезы
+        };
+        
+        // Генерация уникального ID
+        function generateUniqueId() {
+            return Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+        
+        // Load data from localStorage if available
+        function loadData() {
+            const savedData = localStorage.getItem('askezaData');
+            if (savedData) {
+                askezaData = JSON.parse(savedData);
+                updateUI();
+            }
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('askezaData', JSON.stringify(askezaData));
+        }
+        
+        // Generate askeza text based on form inputs
+        function generateAskezaText() {
+            const fullName = document.getElementById('full-name').value;
+            const type = document.getElementById('askeza-type').value;
+            const habit = document.getElementById('habit').value;
+            const goal = document.getElementById('goal').value;
+            
+            if (!fullName || !habit || !goal) {
+                alert('Пожалуйста, заполните все поля формы!');
+                return;
+            }
+            
+            askezaData.fullName = fullName;
+            askezaData.type = type;
+            askezaData.habit = habit;
+            askezaData.goal = goal;
+            
+            let text = '';
+            
+            if (type === 'negative') {
+                text = `Я, ${fullName}, заявляю перед тремя мирами о своём намерение взять Аскезу от ${habit} на срок 21 день.\nИ всю высвободившуюся энергию и все плоды моей Аскезы я направляю на ${goal}, во благо мне и всем живым существам. Да будет так!`;
+            } else {
+                text = `Я, ${fullName}, заявляю перед тремя мирами о своём намерение взять Аскезу на ${habit} на срок 21 день.\nИ всю высвободившуюся энергию и все плоды моей Аскезы я направляю на ${goal}, во благо мне и всем живым существам. Да будет так!`;
+            }
+            
+            document.getElementById('askeza-preview').textContent = text;
+            document.getElementById('start-askeza-btn').classList.remove('hidden');
+        }
+        
+        // Start the askeza
+        function startAskeza() {
+            const startDate = document.getElementById('start-date').value;
+            if (!startDate) {
+                alert('Пожалуйста, выберите дату начала аскезы!');
+                return;
+            }
+            
+            askezaData.startDate = startDate;
+            askezaData.isStarted = true;
+            askezaData.currentDay = 1;
+            
+            saveData();
+            updateUI();
+            
+            // Switch to journal tab
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.tab[data-tab="journal"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('journal').classList.add('active');
+        }
+        
+        // Generate completion text
+        function generateCompletionText() {
+            const { fullName, type, habit, goal } = askezaData;
+            
+            let text = '';
+            
+            if (type === 'negative') {
+                text = `Я, ${fullName}, завершаю свою Аскезу от ${habit} на срок 21 день.\nЯ благодарю себя за проделанную работу и принимаю все плоды моей Аскезы для реализации цели: ${goal}, во благо мне и всем живым существам. Да будет так!`;
+            } else {
+                text = `Я, ${fullName}, завершаю свою Аскезу на ${habit} на срок 21 день.\nЯ благодарю себя за проделанную работу и принимаю все плоды моей Аскезы для реализации цели: ${goal}, во благо мне и всем живым существам. Да будет так!`;
+            }
+            
+            return text;
+        }
+        
+        // Update UI based on current data
+        function updateUI() {
+            if (!askezaData.isStarted) {
+                // Setup form
+                document.getElementById('full-name').value = askezaData.fullName || '';
+                document.getElementById('askeza-type').value = askezaData.type || 'negative';
+                document.getElementById('habit').value = askezaData.habit || '';
+                document.getElementById('goal').value = askezaData.goal || '';
+                document.getElementById('start-date').value = askezaData.startDate || '';
+                
+                if (askezaData.fullName && askezaData.habit && askezaData.goal) {
+                    generateAskezaText();
+                }
+            } else {
+                // Journal
+                document.getElementById('current-day').textContent = `День ${askezaData.currentDay}`;
+                
+                // Generate day selector
+                const daySelector = document.getElementById('day-selector');
+                daySelector.innerHTML = '';
+                
+                for (let i = 1; i <= 21; i++) {
+                    const dayBtn = document.createElement('div');
+                    dayBtn.className = 'day-btn';
+                    if (i < askezaData.currentDay) {
+                        dayBtn.classList.add('completed');
+                    } else if (i === askezaData.currentDay) {
+                        dayBtn.classList.add('current');
+                    }
+                    dayBtn.textContent = i;
+                    dayBtn.setAttribute('data-day', i);
+                    dayBtn.addEventListener('click', () => selectDay(i));
+                    daySelector.appendChild(dayBtn);
+                }
+                
+                // Generate rating buttons
+                generateRatingButtons('askeza-mood');
+                generateRatingButtons('general-mood');
+                generateRatingButtons('energy-level');
+                generateRatingButtons('goal-importance');
+                
+                // Load journal entry for current day if exists
+                loadJournalEntry(askezaData.currentDay);
+                
+                // Update progress bars
+                const progress = Math.round((askezaData.currentDay - 1) / 21 * 100);
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+                document.getElementById('progress-text').textContent = `${progress}%`;
+                document.getElementById('progress-bar-2').style.width = `${progress}%`;
+                document.getElementById('progress-text-2').textContent = `${progress}%`;
+                document.getElementById('progress-bar-3').style.width = `${progress}%`;
+                document.getElementById('progress-text-3').textContent = `${progress}%`;
+                
+                // Update askeza info
+                document.getElementById('info-type').textContent = askezaData.type === 'negative' ? 'Отказ от вредной привычки' : 'Внедрение полезной привычки';
+                document.getElementById('info-habit').textContent = askezaData.habit;
+                document.getElementById('info-goal').textContent = askezaData.goal;
+                document.getElementById('info-start-date').textContent = formatDate(askezaData.startDate);
+                
+                const startDate = new Date(askezaData.startDate);
+                const endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + 20); // 21 days total (0-20)
+                document.getElementById('info-end-date').textContent = formatDate(endDate.toISOString().split('T')[0]);
+                
+                const daysPassed = askezaData.currentDay - 1;
+                const daysLeft = 21 - daysPassed;
+                document.getElementById('info-days-passed').textContent = daysPassed;
+                document.getElementById('info-days-left').textContent = daysLeft;
+                
+                // Update stats table
+                updateStatsTable();
+                
+                // Complete tab
+                if (askezaData.currentDay > 21) {
+                    document.getElementById('completion-not-ready').classList.add('hidden');
+                    document.getElementById('completion-ready').classList.remove('hidden');
+                    document.getElementById('completion-text').textContent = generateCompletionText();
+                } else {
+                    document.getElementById('completion-not-ready').classList.remove('hidden');
+                    document.getElementById('completion-ready').classList.add('hidden');
+                }
+            }
+        }
+        
+        // Generate 1-10 rating buttons
+        function generateRatingButtons(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= 10; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'rating-btn';
+                btn.textContent = i;
+                btn.setAttribute('data-value', i);
+                btn.addEventListener('click', function() {
+                    // Remove selected class from all buttons in container
+                    container.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+                    // Add selected class to clicked button
+                    this.classList.add('selected');
+                });
+                container.appendChild(btn);
+            }
+        }
+        
+        // Load journal entry for specific day
+        function loadJournalEntry(day) {
+            const entry = askezaData.journal[day] || {};
+            
+            // Select rating buttons
+            if (entry.askezaMood) {
+                document.querySelector(`#askeza-mood .rating-btn[data-value="${entry.askezaMood}"]`)?.classList.add('selected');
+            }
+            if (entry.generalMood) {
+                document.querySelector(`#general-mood .rating-btn[data-value="${entry.generalMood}"]`)?.classList.add('selected');
+            }
+            if (entry.energyLevel) {
+                document.querySelector(`#energy-level .rating-btn[data-value="${entry.energyLevel}"]`)?.classList.add('selected');
+            }
+            if (entry.goalImportance) {
+                document.querySelector(`#goal-importance .rating-btn[data-value="${entry.goalImportance}"]`)?.classList.add('selected');
+            }
+            
+            // Fill text areas
+            document.getElementById('general-state').value = entry.generalState || '';
+            document.getElementById('focus').value = entry.focus || '';
+            document.getElementById('steps').value = entry.steps || '';
+            document.getElementById('gratitude').value = entry.gratitude || '';
+            document.getElementById('observations').value = entry.observations || '';
+            document.getElementById('before-sleep-vision').value = entry.beforeSleepVision || '';
+        }
+        
+        // Save journal entry
+        function saveJournalEntry() {
+            const day = askezaData.currentDay;
+            
+            askezaData.journal[day] = {
+                askezaMood: getSelectedRating('askeza-mood'),
+                generalMood: getSelectedRating('general-mood'),
+                energyLevel: getSelectedRating('energy-level'),
+                goalImportance: getSelectedRating('goal-importance'),
+                generalState: document.getElementById('general-state').value,
+                focus: document.getElementById('focus').value,
+                steps: document.getElementById('steps').value,
+                gratitude: document.getElementById('gratitude').value,
+                observations: document.getElementById('observations').value,
+                beforeSleepVision: document.getElementById('before-sleep-vision').value,
+                date: new Date().toISOString()
+            };
+            
+            saveData();
+            
+            // Move to next day if this is the current day
+            if (day === askezaData.currentDay) {
+                askezaData.currentDay++;
+                saveData();
+                updateUI();
+            }
+            
+            alert('Запись сохранена!');
+        }
+        
+        // Get selected rating value
+        function getSelectedRating(containerId) {
+            const selected = document.querySelector(`#${containerId} .rating-btn.selected`);
+            return selected ? parseInt(selected.getAttribute('data-value')) : null;
+        }
+        
+        // Select a specific day
+        function selectDay(day) {
+            // Cannot select future days
+            if (day > askezaData.currentDay) {
+                alert('Нельзя выбрать будущий день. Сначала заполните текущий день.');
+                return;
+            }
+            
+            // Load journal entry for selected day
+            loadJournalEntry(day);
+            document.getElementById('current-day').textContent = `День ${day}`;
+            
+            // Update day selector
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.classList.remove('current');
+                if (parseInt(btn.getAttribute('data-day')) === day) {
+                    btn.classList.add('current');
+                }
+            });
+        }
+        
+        // Update stats table
+        function updateStatsTable() {
+            const tbody = document.getElementById('stats-body');
+            tbody.innerHTML = '';
+            
+            for (let day = 1; day <= Math.min(askezaData.currentDay, 21); day++) {
+                const entry = askezaData.journal[day] || {};
+                
+                const tr = document.createElement('tr');
+                
+                const tdDay = document.createElement('td');
+                tdDay.textContent = day;
+                tr.appendChild(tdDay);
+                
+                const tdAskezaMood = document.createElement('td');
+                tdAskezaMood.textContent = entry.askezaMood || '-';
+                tr.appendChild(tdAskezaMood);
+                
+                const tdGeneralMood = document.createElement('td');
+                tdGeneralMood.textContent = entry.generalMood || '-';
+                tr.appendChild(tdGeneralMood);
+                
+                const tdEnergyLevel = document.createElement('td');
+                tdEnergyLevel.textContent = entry.energyLevel || '-';
+                tr.appendChild(tdEnergyLevel);
+                
+                const tdGoalImportance = document.createElement('td');
+                tdGoalImportance.textContent = entry.goalImportance || '-';
+                tr.appendChild(tdGoalImportance);
+                
+                tbody.appendChild(tr);
+            }
+        }
+        
+        // Finish askeza
+        function finishAskeza() {
+            const finalObservations = document.getElementById('final-observations').value;
+            
+            askezaData.finalObservations = finalObservations;
+            askezaData.completionDate = new Date().toISOString();
+            askezaData.isCompleted = true;
+            
+            saveData();
+            
+            // Archive current askeza
+            const archiveKey = `askezaArchive_${askezaData.id}`;
+            localStorage.setItem(archiveKey, JSON.stringify(askezaData));
+            
+            alert('Поздравляем! Вы успешно завершили 21-дневную аскезу!');
+            
+            // Optionally reset to allow starting a new askeza
+            if (confirm('Хотите начать новую аскезу?')) {
+                // Reset current askeza
+                askezaData = {
+                    fullName: askezaData.fullName, // Keep name for convenience
+                    type: 'negative',
+                    habit: '',
+                    goal: '',
+                    startDate: null,
+                    currentDay: 0,
+                    isStarted: false,
+                    journal: {},
+                    id: generateUniqueId()
+                };
+                
+                saveData();
+                updateUI();
+                
+                // Switch to setup tab
+                document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelector('.tab[data-tab="setup"]').classList.add('active');
+                
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                document.getElementById('setup').classList.add('active');
+            }
+            
+            // Update archive list in settings
+            updateArchiveList();
+        }
+        
+        // Format date to readable format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU');
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Only allow switching to setup if askeza not started
+                if (askezaData.isStarted && this.getAttribute('data-tab') === 'setup') {
+                    alert('Аскеза уже начата. Чтобы начать новую аскезу, завершите текущую.');
+                    return;
+                }
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                // Show corresponding tab content
+                document.getElementById(this.getAttribute('data-tab')).classList.add('active');
+            });
+        });
+        
+        // Функции экспорта и импорта данных
+        
+        // Экспорт данных в JSON
+        function exportAsJSON() {
+            const dataStr = JSON.stringify(askezaData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const askezaName = askezaData.habit ? 
+                `Аскеза_${askezaData.habit.replace(/\s+/g, '_')}` : 
+                'Аскеза';
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${askezaName}_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Экспорт в текстовый формат
+        function exportAsTXT() {
+            let txtContent = '';
+            
+            // Заголовок
+            txtContent += `=== ОТЧЕТ ПО АСКЕЗЕ ===\n\n`;
+            
+            // Информация об аскезе
+            txtContent += `ИНФОРМАЦИЯ ОБ АСКЕЗЕ:\n`;
+            txtContent += `Имя: ${askezaData.fullName}\n`;
+            txtContent += `Тип: ${askezaData.type === 'negative' ? 'Отказ от вредной привычки' : 'Внедрение полезной привычки'}\n`;
+            txtContent += `Привычка: ${askezaData.habit}\n`;
+            txtContent += `Цель: ${askezaData.goal}\n`;
+            
+            // Даты
+            if (askezaData.startDate) {
+                txtContent += `Дата начала: ${formatDate(askezaData.startDate)}\n`;
+                
+                if (askezaData.isCompleted && askezaData.completionDate) {
+                    txtContent += `Дата завершения: ${formatDate(askezaData.completionDate.split('T')[0])}\n`;
+                } else {
+                    const startDate = new Date(askezaData.startDate);
+                    const endDate = new Date(startDate);
+                    endDate.setDate(endDate.getDate() + 20);
+                    txtContent += `Планируемая дата завершения: ${formatDate(endDate.toISOString().split('T')[0])}\n`;
+                }
+            }
+            
+            // Текущий прогресс
+            txtContent += `Прогресс: ${askezaData.currentDay - 1} из 21 дней\n\n`;
+            
+            // Итоговые наблюдения
+            if (askezaData.isCompleted && askezaData.finalObservations) {
+                txtContent += `ИТОГОВЫЕ НАБЛЮДЕНИЯ И ВЫВОДЫ:\n${askezaData.finalObservations}\n\n`;
+            }
+            
+            // Записи дневника
+            txtContent += `ДНЕВНИК АСКЕЗЫ:\n\n`;
+            
+            for (let day = 1; day <= askezaData.currentDay; day++) {
+                const entry = askezaData.journal[day] || {};
+                if (Object.keys(entry).length === 0) continue;
+                
+                txtContent += `-- День ${day} --\n`;
+                if (entry.date) {
+                    const entryDate = new Date(entry.date);
+                    txtContent += `Дата: ${entryDate.toLocaleDateString('ru-RU')}\n`;
+                }
+                
+                if (entry.askezaMood) txtContent += `Настрой на аскезу: ${entry.askezaMood}/10\n`;
+                if (entry.generalMood) txtContent += `Настроение: ${entry.generalMood}/10\n`;
+                if (entry.energyLevel) txtContent += `Энергетический уровень: ${entry.energyLevel}/10\n`;
+                if (entry.goalImportance) txtContent += `Важность поставленной цели: ${entry.goalImportance}/10\n`;
+                
+                if (entry.generalState) txtContent += `\nОбщее состояние:\n${entry.generalState}\n`;
+                if (entry.focus) txtContent += `\nФокус внимания:\n${entry.focus}\n`;
+                if (entry.steps) txtContent += `\nШаги к цели:\n${entry.steps}\n`;
+                if (entry.gratitude) txtContent += `\nБлагодарность себе:\n${entry.gratitude}\n`;
+                if (entry.observations) txtContent += `\nДругие наблюдения:\n${entry.observations}\n`;
+                if (entry.beforeSleepVision) txtContent += `\nВизуализация перед сном:\n${entry.beforeSleepVision}\n`;
+                
+                txtContent += `\n`;
+            }
+            
+            txtContent += `=== КОНЕЦ ОТЧЕТА ===\n`;
+            
+            // Создание и скачивание файла
+            const dataBlob = new Blob([txtContent], {type: 'text/plain;charset=utf-8'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const askezaName = askezaData.habit ? 
+                `Аскеза_${askezaData.habit.replace(/\s+/g, '_')}` : 
+                'Аскеза';
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${askezaName}_отчет_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Импорт данных из JSON
+        function importFromJSON() {
+            const fileInput = document.getElementById('import-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Пожалуйста, выберите файл для импорта!');
+                return;
+            }
+            
+            if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
+                alert('Пожалуйста, выберите файл в формате JSON!');
+                return;
+            }
+            
+            if (!confirm('Внимание! Импорт данных заменит текущую аскезу. Вы уверены?')) {
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // Проверка базовой структуры
+                    if (!importedData.hasOwnProperty('fullName') || 
+                        !importedData.hasOwnProperty('type') || 
+                        !importedData.hasOwnProperty('habit') || 
+                        !importedData.hasOwnProperty('goal')) {
+                        alert('Файл имеет неверный формат или поврежден!');
+                        return;
+                    }
+                    
+                    // Если текущая аскеза начата, предложить её архивировать
+                    if (askezaData.isStarted && !askezaData.isCompleted) {
+                        if (confirm('У вас есть незавершенная аскеза. Сохранить её в архив?')) {
+                            const archiveKey = `askezaArchive_${askezaData.id || Date.now()}`;
+                            localStorage.setItem(archiveKey, JSON.stringify(askezaData));
+                        }
+                    }
+                    
+                    // Импорт данных
+                    askezaData = importedData;
+                    
+                    // Добавление ID, если его нет
+                    if (!askezaData.id) {
+                        askezaData.id = generateUniqueId();
+                    }
+                    
+                    saveData();
+                    updateUI();
+                    updateArchiveList();
+                    
+                    alert('Данные успешно импортированы!');
+                    
+                    // Сброс поля файла
+                    fileInput.value = '';
+                    
+                } catch (error) {
+                    alert('Ошибка при чтении файла: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // Обновление списка архивных аскез
+        function updateArchiveList() {
+            const archiveList = document.getElementById('archive-list');
+            archiveList.innerHTML = '';
+            
+            let hasArchives = false;
+            
+            // Поиск всех архивных аскез в localStorage
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('askezaArchive_')) {
+                    hasArchives = true;
+                    
+                    try {
+                        const archivedData = JSON.parse(localStorage.getItem(key));
+                        
+                        const archiveItem = document.createElement('div');
+                        archiveItem.className = 'card';
+                        archiveItem.style.marginBottom = '10px';
+                        archiveItem.style.padding = '10px';
+                        
+                        const habitName = archivedData.habit || 'Без названия';
+                        const startDate = archivedData.startDate ? formatDate(archivedData.startDate) : 'Неизвестно';
+                        const endDate = archivedData.completionDate ? 
+                            formatDate(archivedData.completionDate.split('T')[0]) : 'Не завершена';
+                        
+                        archiveItem.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <strong>${habitName}</strong>
+                                <div>
+                                    <button class="btn" style="padding: 5px 10px; margin-left: 5px;" data-archive-key="${key}" data-action="load">Загрузить</button>
+                                    <button class="btn btn-secondary" style="padding: 5px 10px; margin-left: 5px;" data-archive-key="${key}" data-action="export">Экспорт</button>
+                                    <button class="btn btn-secondary" style="padding: 5px 10px; margin-left: 5px;" data-archive-key="${key}" data-action="delete">Удалить</button>
+                                </div>
+                            </div>
+                            <div>Тип: ${archivedData.type === 'negative' ? 'Отказ от привычки' : 'Внедрение привычки'}</div>
+                            <div>Даты: ${startDate} - ${endDate}</div>
+                        `;
+                        
+                        archiveList.appendChild(archiveItem);
+                    } catch (e) {
+                        console.error('Ошибка при чтении архива:', e);
+                    }
+                }
+            }
+            
+            if (!hasArchives) {
+                archiveList.innerHTML = '<p>Список пуст.</p>';
+            }
+            
+            // Добавление обработчиков событий для кнопок архива
+            document.querySelectorAll('[data-archive-key]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const key = this.getAttribute('data-archive-key');
+                    const action = this.getAttribute('data-action');
+                    
+                    if (action === 'load') {
+                        loadArchivedAskeza(key);
+                    } else if (action === 'export') {
+                        exportArchivedAskeza(key);
+                    } else if (action === 'delete') {
+                        deleteArchivedAskeza(key);
+                    }
+                });
+            });
+        }
+        
+        // Загрузка архивной аскезы
+        function loadArchivedAskeza(key) {
+            if (!confirm('Это действие заменит текущую аскезу. Продолжить?')) {
+                return;
+            }
+            
+            try {
+                const archivedData = JSON.parse(localStorage.getItem(key));
+                
+                // Если текущая аскеза начата, предложить её архивировать
+                if (askezaData.isStarted && !askezaData.isCompleted) {
+                    if (confirm('У вас есть незавершенная аскеза. Сохранить её в архив?')) {
+                        const currentArchiveKey = `askezaArchive_${askezaData.id || Date.now()}`;
+                        localStorage.setItem(currentArchiveKey, JSON.stringify(askezaData));
+                    }
+                }
+                
+                // Загрузка архивной аскезы
+                askezaData = archivedData;
+                saveData();
+                updateUI();
+                
+                alert('Архивная аскеза успешно загружена!');
+            } catch (e) {
+                alert('Ошибка при загрузке архивной аскезы: ' + e.message);
+            }
+        }
+        
+        // Экспорт архивной аскезы
+        function exportArchivedAskeza(key) {
+            try {
+                const archivedData = JSON.parse(localStorage.getItem(key));
+                
+                const dataStr = JSON.stringify(archivedData, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                
+                const askezaName = archivedData.habit ? 
+                    `Аскеза_${archivedData.habit.replace(/\s+/g, '_')}` : 
+                    'Аскеза';
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${askezaName}_архив_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (e) {
+                alert('Ошибка при экспорте архивной аскезы: ' + e.message);
+            }
+        }
+        
+        // Удаление архивной аскезы
+        function deleteArchivedAskeza(key) {
+            if (confirm('Вы уверены, что хотите удалить эту архивную аскезу?')) {
+                localStorage.removeItem(key);
+                updateArchiveList();
+                alert('Архивная аскеза удалена!');
+            }
+        }
+        
+        // Сброс текущей аскезы
+        function resetCurrentAskeza() {
+            if (!confirm('Вы уверены, что хотите сбросить текущую аскезу?')) {
+                return;
+            }
+            
+            // Архивирование текущей аскезы, если она начата
+            if (askezaData.isStarted) {
+                const archiveKey = `askezaArchive_${askezaData.id || Date.now()}`;
+                localStorage.setItem(archiveKey, JSON.stringify(askezaData));
+            }
+            
+            // Сброс аскезы
+            askezaData = {
+                fullName: askezaData.fullName, // Сохраняем имя для удобства
+                type: 'negative',
+                habit: '',
+                goal: '',
+                startDate: null,
+                currentDay: 0,
+                isStarted: false,
+                journal: {},
+                id: generateUniqueId()
+            };
+            
+            saveData();
+            updateUI();
+            updateArchiveList();
+            
+            // Переключение на вкладку настройки
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.tab[data-tab="setup"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('setup').classList.add('active');
+            
+            alert('Аскеза сброшена!');
+        }
+        
+        // Очистка всех данных
+        function clearAllData() {
+            if (!confirm('ВНИМАНИЕ! Это действие удалит ВСЕ данные приложения, включая текущую аскезу и архив. Продолжить?')) {
+                return;
+            }
+            
+            // Удаление всех данных приложения из localStorage
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                if (key === 'askezaData' || key.startsWith('askezaArchive_')) {
+                    localStorage.removeItem(key);
+                }
+            }
+            
+            // Сброс текущей аскезы
+            askezaData = {
+                fullName: '',
+                type: 'negative',
+                habit: '',
+                goal: '',
+                startDate: null,
+                currentDay: 0,
+                isStarted: false,
+                journal: {},
+                id: generateUniqueId()
+            };
+            
+            saveData();
+            updateUI();
+            updateArchiveList();
+            
+            // Переключение на вкладку настройки
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector('.tab[data-tab="setup"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('setup').classList.add('active');
+            
+            alert('Все данные очищены!');
+        }
+        
+        // Event listeners
+        document.getElementById('generate-btn').addEventListener('click', generateAskezaText);
+        document.getElementById('start-askeza-btn').addEventListener('click', startAskeza);
+        document.getElementById('save-journal-btn').addEventListener('click', saveJournalEntry);
+        document.getElementById('finish-askeza-btn').addEventListener('click', finishAskeza);
+        
+        // Event listeners for data management
+        document.getElementById('export-json-btn').addEventListener('click', exportAsJSON);
+        document.getElementById('export-txt-btn').addEventListener('click', exportAsTXT);
+        document.getElementById('import-json-btn').addEventListener('click', importFromJSON);
+        document.getElementById('reset-current-btn').addEventListener('click', resetCurrentAskeza);
+        document.getElementById('clear-all-data-btn').addEventListener('click', clearAllData);
+        
+        // Initialize
+        loadData();
+        updateArchiveList();
+        if (!askezaData.isStarted) {
+            document.getElementById('start-date').valueAsDate = new Date();
+        }
+    </script>
+</body>
+</html>
